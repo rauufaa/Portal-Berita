@@ -1,0 +1,1 @@
+<header class="bg-white max-w-7xl mx-auto mt-10"></header>
