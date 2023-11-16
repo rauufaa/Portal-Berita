@@ -27,8 +27,8 @@ class Berita extends Controller{
 
     public function tambahBerita(){
         session_start();
-        // var_dump($_POST);
-        // die();
+        var_dump($_POST, $_FILES);
+        die();
         if(isset($_SESSION['id'])){
             if($this->model('Berita_model')->createBerita($_SESSION['id'], $_POST) > 0){
                 header('Location: '. BASEURL . '/berita');

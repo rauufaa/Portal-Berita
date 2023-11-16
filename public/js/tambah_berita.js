@@ -1,3 +1,4 @@
+
 var id = 0;
 // const newsElement = {
 //     id: 0,
@@ -7,6 +8,12 @@ var id = 0;
 //     p: `<p contenteditable="true">Isi Paragrap</p>`
 // }
 //const h2 = `<h2 contenteditable="true" class="relative" onmouseover="">Isi Header</h2>`
+
+
+
+
+
+
 
 function elementCreate(elementType) {
   let time;
@@ -19,7 +26,7 @@ function elementCreate(elementType) {
   parent.classList.add("relative");
   parent.appendChild(poppup(iddata, parent));
 
-  parent.addEventListener("", () => {
+  parent.addEventListener("focusin", () => {
     clearTimeout(time);
     $("#popup" + iddata).show();
     time = setTimeout(() => {
@@ -90,16 +97,136 @@ function createPhoto(input) {
       id++;
     };
     reader.readAsDataURL(input);
+    
   }
   return parent;
 }
 
-$("#createHeader").on("click", () => {
-  $(".editable").append(elementCreate("h2"));
-});
+
+function makeHeader(){
+  let idElement = id;
+  let time;
+  const parent = document.createElement("div");
+  parent.classList.add("relative")
+  const headerElement = document.createElement("input");
+
+  headerElement.type = "text";
+  headerElement.name = `h-${idElement}`;
+  headerElement.placeholder = "Isi Header DISINI";
+  headerElement.classList.add("text-3xl", "font-bold", "border-none");
+
+
+  headerElement.addEventListener("focusin", () => {
+    clearTimeout(time);
+    $("#popup" + idElement).show();
+    time = setTimeout(() => {
+      $("#popup" + idElement).hide();
+    }, 5000);
+  });
+  headerElement.addEventListener("focusout", () => {
+    clearTimeout(time);
+    time = setTimeout(() => {
+      $("#popup" + idElement).hide();
+    }, 1000);
+  });
+
+  let buttonClose = poppup(idElement, parent)
+  
+  parent.appendChild(headerElement);
+  parent.appendChild(buttonClose);
+  id++;
+
+  const element = `<input type="text" name="h-${idElement}" class="text-3xl font-bold"/>`;
+  return parent;
+}
+
+function makeParagraph(){
+  let idElement = id;
+  let time;
+  const parent = document.createElement("div");
+  parent.classList.add("relative")
+  const paragraphElement = document.createElement("textarea");
+
+  paragraphElement.type = "text";
+  paragraphElement.name = `a-${idElement}`;
+  paragraphElement.placeholder = "Isi Paragraph DISINI";
+  paragraphElement.classList.add("text-3xl", "font-bold", "border-none");
+
+
+  paragraphElement.addEventListener("focusin", () => {
+    clearTimeout(time);
+    $("#popup" + idElement).show();
+    time = setTimeout(() => {
+      $("#popup" + idElement).hide();
+    }, 5000);
+  });
+  paragraphElement.addEventListener("focusout", () => {
+    clearTimeout(time);
+    time = setTimeout(() => {
+      $("#popup" + idElement).hide();
+    }, 1000);
+  });
+
+  let buttonClose = poppup(idElement, parent)
+  
+  parent.appendChild(paragraphElement);
+  parent.appendChild(buttonClose);
+  id++;
+
+  // const element = `<input type="text" name="h-${idElement}" class="text-3xl font-bold"/>`;
+  return parent;
+}
+
+function makePicture(){
+  let idElement = id;
+  const parent = document.createElement("div");
+  const imageElement = document.createElement("input")
+  const preview = document.createElement("img");
+
+  imageElement.type = "file";
+  imageElement.name = `img-${idElement}`
+  parent.classList.add("relative")
+  imageElement.addEventListener("input", ()=>{
+    if(imageElement.files[0]){
+      let reader = new FileReader();
+      reader.onload = function (event) {
+        preview.src = event.target.result
+      }
+      reader.readAsDataURL(imageElement.files[0])
+    }
+  })
+
+  const buttonClose = document.createElement("button");
+  buttonClose.textContent = "Hapus"
+  buttonClose.addEventListener("click", ()=>{
+    parent.remove();
+  })
+
+  parent.appendChild(imageElement);
+  parent.appendChild(buttonClose);
+  parent.appendChild(preview);
+  id++;
+  return parent;
+}
+
+// $("#createHeader").on("click", () => {
+//   $(".editable").append(elementCreate("h2"));
+// });
+
+// $("#createParagraph").on("click", () => {
+//   $(".editable").append(elementCreate("a"));
+// });
+
+$("#createHeader").on("click", ()=>{
+  $(".editable").append(makeHeader())
+})
 
 $("#createParagraph").on("click", () => {
-  $(".editable").append(elementCreate("a"));
+  $(".editable").append(makeParagraph());
+});
+
+$("#createPic").on("click", () => {
+  $(".editable").append(makePicture());
 });
 
 $("#kirim").on("click", () => {
