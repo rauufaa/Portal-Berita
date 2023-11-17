@@ -12,6 +12,7 @@ class Login extends Controller{
         $email = $_POST['email'];
         $password = $_POST['password'];
         
+        
         $user = $this->model('User_model')->login($_POST);
         if(!is_null($user)){
             if($password == $user['password']){
