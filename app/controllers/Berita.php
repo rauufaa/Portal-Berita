@@ -57,7 +57,8 @@ class Berita extends Controller
 
     private function newFile($newsData, $files)
     {
-        $fileOpen = fopen(__DIR__ . "/../views/{$newsData['kategori_berita']}/" . $newsData["judul_berita"] . ".php", "w");
+        $newsJudul = str_replace(" ", "-", $newsData["judul_berita"]) . uniqid();
+        $fileOpen = fopen(__DIR__ . "/../views/{$newsData['kategori_berita']}/" . $newsJudul . ".php", "w");
         $keyKategori = $newsData["kategori_berita"];
         unset($newsData["judul_berita"]);
         unset($newsData["kategori_berita"]);
@@ -94,7 +95,7 @@ class Berita extends Controller
                 $idP = explode("-", $file);
                 echo ("<br>Ini file bro\n");
                 var_dump($file_value["tmp_name"]);
-                
+
                 $newName = uniqid($keyKategori);
                 $newName .= ".";
                 $ekstensi = explode(".", $file_value["name"]);
@@ -102,7 +103,8 @@ class Berita extends Controller
                 $newName .= $ekstensi;
 
 
-                move_uploaded_file($file_value["tmp_name"], __DIR__."/../views/politik/assets/".$newName);
+                move_uploaded_file($file_value["tmp_name"], __DIR__."/../../public/assets/politik/".$newName);
+                echo __DIR__;
                 unset($files[$file]);
             }
         }
