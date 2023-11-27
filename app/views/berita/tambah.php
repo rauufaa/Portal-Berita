@@ -107,7 +107,7 @@
           <select name="kategori_berita" id="kategori_berita" class="col-span-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
             <?php foreach ($data['kategori'] as $kategori) : ?>
-              <option value="<?= $kategori['nama_kategori'] ?>"><?= $kategori['nama_kategori'] ?></option>
+              <option value="<?= $kategori['id_kategori'] ?>"><?= $kategori['nama_kategori'] ?></option>
             <?php endforeach; ?>
           </select>
 
@@ -119,6 +119,14 @@
         <div class="grid md:grid-cols-4 bg-white py-2 px-3 ">
           <label for="sumber_berita" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sumber Berita</label>
           <input type="text" name="sumber_berita" id="sumber_berita" class="col-span-3 resize-none text-base block p-2.5 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Sumber..." />
+        </div>
+        <div class="grid md:grid-cols-4 bg-white py-2 px-3 ">
+          <label for="tumbnail" class="mb-2 text-sm font-medium text-gray-900 dark:text-white">Tumbnail</label>
+          <div class="col-span-3">
+            <input name="tumbnail" class="w-full block text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="tumbnail" type="file">
+            <img id="tumbnail_preview" class=" w-50 m-auto p-2" />
+          </div>
+
         </div>
 
         <div class="flex items-center justify-between px-3 py-2 border dark:border-gray-600">

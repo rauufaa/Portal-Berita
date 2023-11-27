@@ -31,19 +31,21 @@ class Berita extends Controller
 
     public function tambahBerita()
     {
-        session_start();
-        $this->newFile($_POST, $_FILES);
+        // session_start();
+        // $this->newFile($_POST, $_FILES, $_SESSION['id']);
 
-        die();
-
-        if (isset($_SESSION['id'])) {
-            if ($this->model('Berita_model')->createBerita($_SESSION['id'], $_POST) > 0) {
-                header('Location: ' . BASEURL . '/berita');
-                exit;
-            }
-        } else {
-            var_dump($_SESSION['id']);
+        // die();
+        if ($to = $this->newFile($_POST, $_FILES, 23000000)) {
+            header('Location: ' . BASEURL . "/$to");
+            exit;
         }
+
+        // if (isset($_SESSION['id'])) {
+            
+            
+        // } else {
+        //     //var_dump($_SESSION['id']);
+        // }
     }
 
     public function hapusBerita($id_berita)
@@ -54,14 +56,63 @@ class Berita extends Controller
         }
     }
 
-
-    private function newFile($newsData, $files)
+    public function updateBerita($news)
     {
-        $newsJudul = str_replace(" ", "-", $newsData["judul_berita"]) . uniqid();
-        $fileOpen = fopen(__DIR__ . "/../views/{$newsData['kategori_berita']}/" . $newsJudul . ".php", "w");
-        $keyKategori = $newsData["kategori_berita"];
+        $data['judul'] = 'Home';
+        $data['berita'] = $this->model('Berita_model')->getBeritaById();
+        $data['news'] = $news;
+        $this->view('templates/header', $data);
+        $this->view('berita/update', $data);
+        $this->view('templates/footer');
+    }
+
+
+    private function newFile($newsData, $files, $user_id)
+    {
+        // var_dump($newsData["kategori_berita"]);
+        // die;
+        // var_dump(empty($files['tumbnail']['name']));
+        // die;
+        $judul = str_replace(" ", "-", $newsData["judul_berita"]);
+        $uniqId = $this->model('Berita_model')->getLastId() + 1;
+        
+        // $keyKategori = strtolower($newsData["kategori_berita"]);
+        $keyKategori = strtolower($this->model('Kategori_model')->getCategoryName($newsData["kategori_berita"]));
+
+        $newsJudul = "$judul-$uniqId";
+        $tumbnail = "politikTumbnail.jpg";
+
+        if (!empty($files['tumbnail']['name'])) {
+            $tumbnail = $newsJudul;
+            $ekstensi = explode(".", $files['tumbnail']["name"]);
+            $ekstensi = strtolower(end($ekstensi));
+            $tumbnail .= $ekstensi;
+            move_uploaded_file($files['tumbnail']["tmp_name"], __DIR__ . "/../../public/assets/$keyKategori/" . $tumbnail);
+            
+        }
+        unset($files['tumbnail']);
+
+        $dataBerita["judul_berita"] = $newsData["judul_berita"];
+        $dataBerita["nama_tumbnail"] = $tumbnail;
+        $dataBerita["kategori_berita"] = $newsData["kategori_berita"];
+
+        // $this->model("Berita_model")->createBerita($user_id, $dataBerita);
+
+        if (!file_exists(__DIR__ . "/../views/$keyKategori")) {
+            mkdir(__DIR__ . "/../views/$keyKategori", 0777, true);
+            mkdir(__DIR__ . "/../../public/assets/$keyKategori", 0777, true);
+        }
+        $fileOpen = fopen(__DIR__ . "/../views/$keyKategori/$newsJudul.php", "w");
+
+        $txt = "<h1 class=\"text-2xl\">{$newsData['judul_berita']}</h1>\n";
+        fwrite($fileOpen, $txt);
+        $txt = "<h2 class=\"text-lg\">{$newsData['lokasi_berita']}, {$newsData["sumber_berita"]}</h2>\n";
+        fwrite($fileOpen, $txt);
+
         unset($newsData["judul_berita"]);
         unset($newsData["kategori_berita"]);
+        unset($newsData["lokasi_berita"]);
+        unset($newsData["sumber_berita"]);
 
         //$this->writeToFile();
         foreach ($newsData as $data => $value_data) {
@@ -76,6 +127,18 @@ class Berita extends Controller
                     if ((int)$id[1] > (int)$idP[1]) {
                         echo ("<br>Ini file bro\n");
                         var_dump($file_value["tmp_name"]);
+
+                        $newName = uniqid($keyKategori);
+                        $newName .= ".";
+                        $ekstensi = explode(".", $file_value["name"]);
+                        $ekstensi = strtolower(end($ekstensi));
+                        $newName .= $ekstensi;
+
+
+                        move_uploaded_file($file_value["tmp_name"], __DIR__ . "/../../public/assets/$keyKategori/" . $newName);
+
+                        $txt = "<img src=\"" . BASEURL . "/assets/$keyKategori/$newName\" />\n";
+                        fwrite($fileOpen, $txt);
                         unset($files[$file]);
                     } else {
                         // var_dump($id[0], $value_data);
@@ -86,6 +149,17 @@ class Berita extends Controller
             }
 
             var_dump($id[0], $value_data);
+
+            switch ($id[0]) {
+                case "h":
+                    $txt = "<h2>$value_data</h2>\n";
+                    break;
+                case "p":
+                    $txt = "<p>$value_data</p>\n";
+                    break;
+            }
+
+            fwrite($fileOpen, $txt);
             unset($newsData[$data]);
         }
 
@@ -103,11 +177,17 @@ class Berita extends Controller
                 $newName .= $ekstensi;
 
 
-                move_uploaded_file($file_value["tmp_name"], __DIR__."/../../public/assets/politik/".$newName);
-                echo __DIR__;
+                move_uploaded_file($file_value["tmp_name"], __DIR__ . "/../../public/assets/$keyKategori/" . $newName);
+                $txt = "<img src=\"" . BASEURL . "/assets/$keyKategori/$newName\" />";
+                fwrite($fileOpen, $txt);
                 unset($files[$file]);
             }
         }
+        fclose($fileOpen);
+        if($this->model("Berita_model")->createBerita($user_id, $dataBerita) > 0){
+            return "$keyKategori/$newsJudul";
+        }
+        return false;
     }
 
     private function writeToFile($element = "", $isi = "", $fileOpen)

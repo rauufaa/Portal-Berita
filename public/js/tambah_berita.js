@@ -383,6 +383,18 @@ $("#ep").on("click", () => {
   $(".editable").append(ekspresifPicture());
 });
 
+$("#tumbnail").on("input", ()=>{
+  if ($("#tumbnail").prop("files")[0]) {
+    //console.log($element.children("input").prop("files")[0])
+    let reader = new FileReader();
+    reader.onload = function (event) {
+      console.log("jalan");
+      $("#tumbnail_preview").attr("src", event.target.result);
+    };
+    reader.readAsDataURL($("#tumbnail").prop("files")[0]);
+  }
+})
+
 // function createElement(element){
 //     console.log(element)
 //     $(".editable").append(newsElement.p)

@@ -65,5 +65,10 @@ class Database{
     public function rowCount() {
         return $this->stmt->rowCount();
     }
+
+    public function singleValue() {
+        $this->execute();
+        return $this->stmt->fetchColumn();
+    }
 }
 ?>

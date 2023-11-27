@@ -12,7 +12,9 @@ class User_model {
     }
 
     public function login($data){
-        $this->db->query("SELECT * FROM $this->table WHERE email='" . $data['email'] . "'");
+        $this->db->query("SELECT * FROM $this->table WHERE email=:email AND password=:password");
+        $this->db->bind("email", $data['email']);
+        $this->db->bind("password", $data['password']);
         return $this->db->single();
     }
 }
