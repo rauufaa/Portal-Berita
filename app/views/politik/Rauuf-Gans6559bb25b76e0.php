@@ -1,1 +1,0 @@
-Kontol semrang

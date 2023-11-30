@@ -395,6 +395,11 @@ $("#tumbnail").on("input", ()=>{
   }
 })
 
+$("#btn_delete_tumbnail").on("click", function(){
+  $(this).siblings("#tumbnail").val(null);
+  $("#tumbnail_preview").attr("src", "");
+})
+
 // function createElement(element){
 //     console.log(element)
 //     $(".editable").append(newsElement.p)

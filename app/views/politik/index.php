@@ -84,3 +84,5 @@
     
 
 </div>
+
+<?php require_once('comment.php')?>

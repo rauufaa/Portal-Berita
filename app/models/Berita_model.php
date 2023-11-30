@@ -11,7 +11,7 @@ class Berita_model
 
     public function getBerita()
     {
-        $this->db->query('SELECT * FROM ' . $this->table);
+        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail, berita.tanggal_terbit, kategori.nama_kategori, berita.id_pengguna FROM kategori, $this->table WHERE berita.id_kategori=kategori.id_kategori");
         return $this->db->resultSet();
     }
 
@@ -44,15 +44,17 @@ class Berita_model
 
     public function getLastId()
     {
-        $this->db->query("SELECT MAX(id_berita) as max FROM $this->table;");
         
+        $this->db->query("SELECT AUTO_INCREMENT - 1 as max FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA =:dbname AND TABLE_NAME='$this->table';");
+        
+        $this->db->bind("dbname", DB_NAME);
         return $this->db->singleValue();
     }
 
     public function getCategoryName($id)
     {
-        $this->db->query("SELECT nama_kategori FROM $this->table;");
-        
+        $this->db->query("SELECT kategori.nama_kategori FROM $this->table, kategori WHERE $this->table.id_kategori = kategori.id_kategori AND $this->table.id_berita=:id_berita;");
+        $this->db->bind("id_berita", $id);
         return $this->db->singleValue();
     }
 
@@ -61,4 +63,16 @@ class Berita_model
         $this->db->bind("id_pengguna", $id);
         return $this->db->resultSet();
     }
+
+    public function setCountEdited($id_berita) {
+        $this->db->query("UPDATE $this->table SET edit=edit+1");
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    // private function getCountEdited($id_berita) {
+    //     $this->db->query("SELECT edit FROM $this->table WHERE id_berita=:id_berita");
+    //     $this->db->bind("id_berita", $id_berita);
+    //     return $this->db->singleValue();
+    // }
 }

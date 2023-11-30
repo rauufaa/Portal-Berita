@@ -19,6 +19,10 @@ class Kategori_model{
         $this->db->bind("id_kategori", $id);
         return $this->db->singleValue();
     }
+
+    public function getCategoryNews($id){
+        $this->db->query("SELECT kategori.nama_kategori FROM $this->table,  WHERE id_kategori=:id_kategori;");
+    }
 }
 
 

@@ -6,8 +6,8 @@ class User extends Controller{
         if(!$_SESSION){
             header("Location:".BASEURL);
         }
-        var_dump($tab);
-        die;
+        // var_dump($tab);
+        // die;
         $data['judul'] = 'Berita';
         //$data['berita'] = $this->model('Berita_model')->getBerita();
         $data['tab'] = $tab;
@@ -23,6 +23,10 @@ class User extends Controller{
 
     public function hapusBerita($id_berita)
     {
+        session_start();
+        if(!$_SESSION){
+            header("Location:".BASEURL);
+        }
         if ($this->model('Berita_model')->deleteBerita($id_berita) > 0) {
             header('Location: ' . BASEURL . '/user');
             exit;

@@ -2,8 +2,8 @@
 <div class=" container">
     <?php foreach ($data['berita'] as $berita) : ?>
         <article class=" w-96 ">
-            <h4 class=" text-3xl"><?= $berita['judul_berita'] ?></h4>
-            <p><?= $berita['isi_berita'] ?></p>
+            <h4 class=" text-3xl"><?= str_replace(" ","-", $berita['judul_berita'])."-".$berita['id_berita'] ?></h4>
+            <a href="<?= BASEURL ?>/<?= $berita['nama_kategori']?>/<?= str_replace(" ","-", $berita['judul_berita'])."-".$berita['id_berita'] ?>">Link To isi</a>
             <a href="<?= BASEURL ?>/berita/hapusBerita/<?= $berita['id_berita'] ?>">Hapus</a>
         </article>
     <?php endforeach; ?>
