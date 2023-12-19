@@ -1,4 +1,4 @@
-<header class="sticky top-0 w-full z-30 bg-white border-gray-200">
+<header class="sticky top-0 w-full z-30 bg-white border-gray-200 shadow-lg">
   <nav class="bg-white border-gray-200 dark:bg-gray-900 max-w-7xl m-auto">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -51,7 +51,7 @@
   </nav>
 </header>
 
-<nav class="max-w-6xl flex justify-center gap-7 m-auto">
+<nav class="max-w-6xl flex justify-center gap-7 m-auto py-2 my-3 text-lg">
   <a href="">Politik</a>
   <a href="">Teknologi</a>
   <a href="">Pendidikan</a>

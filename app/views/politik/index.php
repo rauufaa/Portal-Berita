@@ -1,6 +1,7 @@
 <div class="max-w-6xl p-5 flex justify-between m-auto items-start">
     <section class="content p-2 max-w-3xl flex flex-col">
-        <?php if (!empty($data['render'])) : ?>
+        <?php var_dump(stream_resolve_include_path("{$data['render']}.php"));?>
+        <?php if (stream_resolve_include_path("{$data['render']}.php")) : ?>
             <?php require_once("{$data['render']}.php") ?>
         <?php else : ?>
 
@@ -28,61 +29,61 @@
     <section class="col-span-2 sm:col-span-3 flex justify-center overflow-hidden">
         <h2 class="text-4xl font-serif dark:text-white px-9"><span class="relative before:content-[''] before:bg-black before:absolute before:w-96 before:h-1 before:my-auto before:top-0 before:bottom-0 before:left-full px-6 after:content-[''] after:bg-black after:absolute after:w-96 after:h-1 after:my-auto after:top-0 after:bottom-0 after:right-full">Berita Populer</span></h2>
     </section>
-
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="" class="flex justify-center">
-            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
-        </a>
-        <div class="p-5">
-            <div class="flex flex-col md:flex-row md:items-center">
-
-                <a href="#" class="text-red-500">Kategori</a>
-                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-            </div>
-
-            <a href="">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-            </a>
-        </div>
-    </div>
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="" class="flex justify-center">
-            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
-        </a>
-        <div class="p-5">
-            <div class="flex flex-col md:flex-row md:items-center">
-
-                <a href="#" class="text-red-500">Kategori</a>
-                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-            </div>
-
-            <a href="">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-            </a>
-        </div>
-    </div>
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <a href="" class="flex justify-center">
-            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
-        </a>
-        <div class="p-5">
-            <div class="flex flex-col md:flex-row md:items-center">
-
-                <a href="#" class="text-red-500">Kategori</a>
-                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-            </div>
-
-            <a href="">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
-            </a>
-        </div>
-    </div>
     
-    
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <a href="" class="flex justify-center">
+            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
+        </a>
+        <div class="p-5">
+            <div class="flex flex-col md:flex-row md:items-center">
+
+                <a href="#" class="text-red-500">Kategori</a>
+                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
+
+            </div>
+
+            <a href="">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+            </a>
+        </div>
+    </div>
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <a href="" class="flex justify-center">
+            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
+        </a>
+        <div class="p-5">
+            <div class="flex flex-col md:flex-row md:items-center">
+
+                <a href="#" class="text-red-500">Kategori</a>
+                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
+
+            </div>
+
+            <a href="">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+            </a>
+        </div>
+    </div>
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <a href="" class="flex justify-center">
+            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
+        </a>
+        <div class="p-5">
+            <div class="flex flex-col md:flex-row md:items-center">
+
+                <a href="#" class="text-red-500">Kategori</a>
+                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
+
+            </div>
+
+            <a href="">
+                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+            </a>
+        </div>
+    </div>
+
+
 
 </div>
 
-<?php require_once('comment.php')?>
+<?php require_once('comment.php') ?>
