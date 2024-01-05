@@ -14,4 +14,14 @@ class Komentar_reply_model{
         $this->db->bind("id_komentar", $id_komentar);
         return $this->db->resultSet();
     }
+
+    public function addReplyKomentar($data) {
+        $this->db->query("INSERT INTO $this->table VALUES (:id_komentar, :isi_komentar, NOW(), :id_pengguna)");
+        $this->db->bind("id_komentar", $data['id_komentar']);
+        $this->db->bind("isi_komentar", $data['isi_komentar']);
+        $this->db->bind("id_pengguna", $data['id_pengguna']);
+        
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
 }

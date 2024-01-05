@@ -4,6 +4,7 @@ class Berita extends Controller
 {
     public function index()
     {
+        
         $data['judul'] = 'Berita';
         $data['berita'] = $this->model('Berita_model')->getBerita();
         $this->view('templates/header', $data);
@@ -22,7 +23,7 @@ class Berita extends Controller
 
     public function tambah()
     {
-        session_start();
+        
         $dataHeader['judul'] = 'tambah';
         $data['kategori'] = $this->model('Kategori_model')->getAllKategori();
         $this->view('templates/header', $dataHeader);
@@ -34,7 +35,7 @@ class Berita extends Controller
 
     public function edit($judul_berita)
     {
-        session_start();
+        
         if (!$_SESSION) {
             header("Location:" . BASEURL);
             exit;
@@ -155,7 +156,7 @@ class Berita extends Controller
         // session_start();
         // $this->newFile($_POST, $_FILES, $_SESSION['id']);
 
-        // die();
+        
         if ($to = $this->newFile($_POST, $_FILES, 23000000)) {
 
             header('Location: ' . BASEURL . "/$to");
@@ -317,6 +318,14 @@ class Berita extends Controller
             return "$keyKategori/$newsJudul";
         }
         return false;
+    }
+
+    public function print($judulBerita){
+        // var_dump($judulBerita);
+        $this->view('templates/header');
+        $this->view("politik/$judulBerita");
+        $this->view('templates/footer');
+        echo "<script>window.print()</script>";
     }
 
     private function writeToFile($element = "", $isi = "", $fileOpen)

@@ -2,7 +2,6 @@
 
 class User extends Controller{
     public function index($tab="") {
-        session_start();
         if(!$_SESSION){
             header("Location:".BASEURL);
         }
@@ -20,6 +19,13 @@ class User extends Controller{
         $this->view('user/index', $data);
         $this->view('templates/footer');
     }
+
+    public function signOut() {
+        unset($_SESSION['user']);
+        header("Location:" . BASEURL );
+        exit;
+    }
+
 
     public function hapusBerita($id_berita)
     {

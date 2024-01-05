@@ -169,17 +169,17 @@ function makeParagraph() {
 function ekspresifHeader() {
   let $element = $(`
       <div class=" max-w-full flex flex-auto" draggable="true">
-        <div class="w-fit py-2 pr-2 text-gray-500 rounded hover:text-gray-900 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+        <div class="w-fit py-2 pr-2 text-gray-500 rounded hover:text-gray-900   ">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </div>
         <div class="w-full gap-3 items-center">
           <div class="flex items-center justify-between w-full px-2">
             <label >Item Header</label>
-            <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+            <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100   ">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
             </button>
           </div>
-          <textarea name="h-${id}" wrap="soft" class="block p-2.5 w-full text-xl font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+          <textarea name="h-${id}" wrap="soft" class="block p-2.5 w-full text-xl font-medium text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500      " placeholder="Write your thoughts here..."></textarea>
         </div>
       </div>
     `);
@@ -216,17 +216,17 @@ function ekspresifHeader() {
 function ekspresifParagraph() {
   let $element = $(`
     <div class=" max-w-full flex flex-auto" draggable="true">
-      <div class="w-fit py-2 pr-2 text-gray-500 rounded hover:text-gray-900 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+      <div class="w-fit py-2 pr-2 text-gray-500 rounded hover:text-gray-900   ">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </div>
       <div class="w-full gap-3 items-center">
         <div class="flex items-center justify-between w-full px-2">
           <label >Item Paragraph</label>
-          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100   ">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
           </button>
         </div>
-        <textarea name="p-${id}" wrap="soft" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+        <textarea name="p-${id}" wrap="soft" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500      " placeholder="Write your thoughts here..."></textarea>
       </div>
     </div>
     `);
@@ -258,18 +258,18 @@ function ekspresifParagraph() {
 function ekspresifPicture() {
   let $element = $(`
     <div class=" max-w-full flex flex-auto" draggable="true">
-      <div class="w-fit py-2 pr-2 text-gray-500 rounded hover:text-gray-900 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+      <div class="w-fit py-2 pr-2 text-gray-500 rounded hover:text-gray-900   ">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </div>
       <div class="w-full gap-3 items-center">
         <div class="flex items-center justify-between w-full px-2">
           <label >Item Photo</label>
-          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+          <button type="button" class="p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100   ">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
           </button>
         </div>
         
-          <input name="img-${id}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
+          <input name="img-${id}" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none   " id="file_input" type="file">
           <img id="image_preview" class=" w-50 m-auto p-2"/>  
       </div>
     </div>
@@ -310,7 +310,7 @@ function makePicture() {
   imageElement.type = "file";
   imageElement.name = `img-${idElement}`;
   imageElement.classList =
-    "block max-w-lg text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400";
+    "block max-w-lg text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none   ";
   parent.classList.add("relative");
   imageElement.addEventListener("", () => {
     if (imageElement.files[0]) {
