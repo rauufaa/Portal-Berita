@@ -9,8 +9,14 @@ class Komentar_reply_model{
         $this->db = new Database;
     }
 
-    public function getBalasan($id_komentar) {
+    public function getBalasa2n($id_komentar) {
         $this->db->query("SELECT * FROM $this->table WHERE id_komentar=:id_komentar");
+        $this->db->bind("id_komentar", $id_komentar);
+        return $this->db->resultSet();
+    }
+
+    public function getBalasan($id_komentar) {
+        $this->db->query("SELECT komentar_reply.id_komentar, komentar_reply.isi_komentar, DATE_FORMAT(komentar_reply.tanggal_komentar, '%d-%b-%Y %H:%i') as tanggal_komentar, pengguna.nama_pengguna FROM $this->table left join pengguna on $this->table.id_pengguna = pengguna.id_pengguna WHERE komentar_reply.id_komentar=:id_komentar");
         $this->db->bind("id_komentar", $id_komentar);
         return $this->db->resultSet();
     }

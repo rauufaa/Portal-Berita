@@ -3,12 +3,29 @@
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="<?= BASEURL ?>" class="flex items-center space-x-3 rtl:space-x-reverse">
         <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-        <span class="self-center text-2xl font-semibold whitespace-nowrap ">Flowbite</span>
+        <span class="self-center text-2xl font-semibold whitespace-nowrap ">Berita Kami</span>
       </a>
+      <div class="flex-1">
+
+        <form class="max-w-md mx-auto" method="get" action="<?= BASEURL ?><?= isset($data['kategori']) ? "/" . $data['kategori'] : "" ?>/cari">
+          <label for="pencarian_berita" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+              </svg>
+            </div>
+            <input type="search" id="pencarian_berita" name="pencarian_berita" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500      " placeholder="Search Berita" required>
+            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2   ">Search</button>
+          </div>
+        </form>
+      </div>
+
+
       <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <?php if (!isset($_SESSION['user'])) : ?>
           <a href="<?= BASEURL ?>/signin" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center   " type="button">
-            Toggle modal
+            Login
           </a>
         <?php else : ?>
 
@@ -55,10 +72,9 @@
 </header>
 
 <nav class="max-w-6xl flex justify-center gap-7 m-auto py-2 my-3 text-lg">
-  <a href="">Politik</a>
-  <a href="">Teknologi</a>
-  <a href="">Pendidikan</a>
-  <a href="">Budaya</a>
+  <?php foreach ($data['allKategori'] as $kategori) : ?>
+    <a href="<?= BASEURL?>/<?= strtolower($kategori['nama_kategori'])?>"><?= $kategori['nama_kategori']?></a>
+  <?php endforeach; ?>
 </nav>
 
 

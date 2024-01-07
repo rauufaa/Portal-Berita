@@ -13,6 +13,12 @@ class Kategori_model{
         return $this->db->resultSet();
     }
 
+    public function getCategoryByName($data) {
+        $this->db->query('SELECT id_kategori, nama_kategori FROM ' . $this->table . ' WHERE nama_kategori=:nama_kategori');
+        $this->db->bind(":nama_kategori", $data);
+        return $this->db->single();
+    }
+
     public function getCategoryName($id)
     {
         $this->db->query("SELECT nama_kategori FROM $this->table WHERE id_kategori=:id_kategori;");

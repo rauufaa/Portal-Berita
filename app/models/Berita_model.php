@@ -9,15 +9,22 @@ class Berita_model
         $this->db = new Database;
     }
 
-    public function getBerita()
+    public function getBerita($limit=5)
     {
-        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail, berita.tanggal_terbit, kategori.nama_kategori, berita.id_pengguna FROM kategori, $this->table WHERE berita.id_kategori=kategori.id_kategori");
+        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail,DATE_FORMAT(berita.tanggal_terbit, '%d-%b-%Y %H:%i') as tanggal_terbit, berita.edit, kategori.nama_kategori, berita.id_pengguna, pengguna.nama_pengguna FROM  $this->table left join kategori on $this->table.id_kategori=kategori.id_kategori left join pengguna on $this->table.id_pengguna=pengguna.id_pengguna limit :limit");
+        $this->db->bind("limit", $limit);
         return $this->db->resultSet();
     }
 
     public function getBeritaById($id = 1)
     {
         $this->db->query('SELECT * FROM ' . $this->table . ' WHERE id_berita=:id');
+        $this->db->bind('id', $id);
+        return $this->db->single();
+    }
+
+    public function getDetailBerita($id) {
+        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail,DATE_FORMAT(berita.tanggal_terbit, '%d-%b-%Y %H:%i') as tanggal_terbit, berita.edit, kategori.nama_kategori, berita.id_pengguna, pengguna.nama_pengguna FROM  $this->table left join kategori on $this->table.id_kategori=kategori.id_kategori left join pengguna on $this->table.id_pengguna=pengguna.id_pengguna WHERE $this->table.id_berita=:id");
         $this->db->bind('id', $id);
         return $this->db->single();
     }
@@ -70,9 +77,29 @@ class Berita_model
         return $this->db->rowCount();
     }
 
-    public function getBeritaByCategory($category=1) {
-        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail, berita.tanggal_terbit, kategori.nama_kategori, berita.id_pengguna FROM kategori, $this->table WHERE berita.id_kategori=kategori.id_kategori AND berita.id_kategori=:id_kategori");
+    public function getBeritaByCategory($category=1, $limit=10) {
+        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail, DATE_FORMAT(berita.tanggal_terbit, '%d-%b-%Y %H:%i') as tanggal_terbit, kategori.nama_kategori, berita.id_pengguna FROM kategori, $this->table WHERE berita.id_kategori=kategori.id_kategori AND berita.id_kategori=:id_kategori limit :limit");
         $this->db->bind("id_kategori", $category);
+        $this->db->bind("limit", $limit);
+        return $this->db->resultSet();
+    }
+
+    public function getBeritaByCategoryAndName($data) {
+        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail, berita.tanggal_terbit, kategori.nama_kategori, berita.id_pengguna FROM kategori, $this->table WHERE berita.id_kategori=kategori.id_kategori AND berita.id_kategori=:id_kategori");
+        $this->db->bind("id_kategori", $data);
+        return $this->db->resultSet();
+    }
+
+    public function getSearchBeritaKategori($kategori="", $pencarian){
+        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail, DATE_FORMAT(berita.tanggal_terbit, '%d-%b-%Y %H:%i') as tanggal_terbit, kategori.nama_kategori, berita.id_pengguna FROM $this->table left join kategori on berita.id_kategori=kategori.id_kategori WHERE kategori.nama_kategori=:kategori AND berita.judul_berita like :pencarian");
+        $this->db->bind("kategori", $kategori);
+        $this->db->bind("pencarian", "%$pencarian%");
+        return $this->db->resultSet();
+    }
+
+    public function getSearchBeritaKategoriAll($pencarian){
+        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail, DATE_FORMAT(berita.tanggal_terbit, '%d-%b-%Y %H:%i') as tanggal_terbit, kategori.nama_kategori, berita.id_pengguna FROM $this->table left join kategori on berita.id_kategori=kategori.id_kategori WHERE berita.judul_berita like :pencarian");
+        $this->db->bind("pencarian", "%$pencarian%");
         return $this->db->resultSet();
     }
 

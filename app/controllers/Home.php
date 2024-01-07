@@ -1,6 +1,6 @@
 <?php
 class Home extends Controller{
-    public function index(){
+    public function index($kategori="", $judul=""){
         // var_dump($kategori[]);
         // die;
         if(isset($_POST['submit_login'])){
@@ -15,6 +15,46 @@ class Home extends Controller{
             }
         }
 
+        if($kategori == "signin"){
+            $this->signin();
+            exit;
+        }
+
+        if($kategori == "register"){
+            $this->register();
+            exit;
+        }
+
+        if(!empty($kategori)){
+            $kategori = $this->model("Kategori_model")->getCategoryByName($kategori);
+            $this->kategoriBerita($kategori, $judul);
+            exit;
+        }
+        
+        switch($kategori){
+            case "politik":
+
+        }
+        // $data['judul'] = $kategori["nama_kategori"];
+        // $data['render'] = $judul;
+        // $id_berita = explode("-", $judul);
+        // $id_berita = (int)end($id_berita);
+        $data['berita']['beritaPopuler'] = $this->model("Berita_model")->getBerita(6);
+        // $data['berita']['side'] = $this->model("Berita_model")->getBeritaByCategory($kategori['id_kategori'], 4);
+        // $data['kategori'] = strtolower($kategori['nama_kategori']);
+        // $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
+
+
+
+        // $data['komentar'] = $this->model('Komentar_model')->getKomentar($id_berita);
+        
+        // $data['judul'] = 'Berita';
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
+
+        $data['berita']['carousel'] = $this->model('Berita_model')->getBerita();
+        //var_dump($data['berita']['carousel']);
+        $data['berita']['lain'] = $this->model('Berita_model')->getBerita(25);
+        // $data['kategori'] = strtolower($kategori['nama_kategori']);
         
         
         // $kategori = strtolower($kategori);
@@ -23,9 +63,9 @@ class Home extends Controller{
         //     $this->$kategori($judul);
         //     exit;
         // }
-        $data['berita'] = $this->model('Berita_model')->getBeritaByCategory(1);
+        //$data['berita'] = $this->model('Berita_model')->getBeritaByCategory(1);
         $data['judul'] = 'Home';
-        $data['nama'] = $this->model('User_model')->getUser();
+        
         
         $this->view('templates/header', $data);
         $this->view('components/header', $data);
@@ -204,32 +244,51 @@ class Home extends Controller{
 
 
     // ranah politik
-    public function politik($judul="")
+    public function kategoriBerita($kategori ,$judul="")
     {
-        
+        if($judul=="cari"){
+            // echo"jalan kaga";
+            // var_dump($_GET);
+            // die;
 
-        if(!empty($judul)){
-            $this->renderBerita($judul, $_POST);
+            if(isset($_GET)){
+                $this->pencarianBeritaKategori($kategori, $_GET['pencarian_berita']);
+                exit;
+            }
+        }
+
+        if(!empty($judul) && $judul != "cari"){
+           
+            $this->renderBerita($judul, $kategori ,$_POST);
+            
             exit;
         } 
-        $data['judul'] = 'Politik';
+        $data['judul'] = $kategori["nama_kategori"];
         // $data['render'] = $judul;
         // $id_berita = explode("-", $judul);
         // $id_berita = (int)end($id_berita);
-        // var_dump($id_berita);
+        $data['berita']['beritaPopuler'] = $this->model("Berita_model")->getBeritaByCategory($kategori['id_kategori'], 6);
+        $data['berita']['side'] = $this->model("Berita_model")->getBeritaByCategory($kategori['id_kategori'], 4);
+        // $data['kategori'] = strtolower($kategori['nama_kategori']);
+        // $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
 
 
 
         // $data['komentar'] = $this->model('Komentar_model')->getKomentar($id_berita);
         
-        $data['judul'] = 'Berita';
-        $data['berita'] = $this->model('Berita_model')->getBeritaByCategory(1);
-        $data['judul'] = 'Politik';
+        // $data['judul'] = 'Berita';
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
+
+        $data['berita']['carousel'] = $this->model('Berita_model')->getBeritaByCategory($kategori["id_kategori"], 5);
+        $data['berita']['lain'] = $this->model('Berita_model')->getBeritaByCategory($kategori["id_kategori"]);
+        $data['kategori'] = strtolower($kategori['nama_kategori']);
+        // var_dump($data['kategori']);
+        // $data['judul'] = 'Politik';
         // $data['nama'] = $this->model('User_model')->getUser();
         
         $this->view('templates/header', $data);
         $this->view('components/header', $data);
-        $this->view('politik/index', $data);
+        $this->view('berita-kategori/index', $data);
         
         
         $this->view('templates/footer');
@@ -241,60 +300,127 @@ class Home extends Controller{
         // $this->view('templates/footer');
     }
 
-    private function renderBerita($judul, $dataPostKomentar=null){
-        if($dataPostKomentar!=null){
-            // if(isset($_SESSION['user'])){
-            //     $dataKomen['id_pengguna'] = $_SESSION['user']['id'];
-            //     $dataKomen['isi_komentar'] = $dataPostKomentar['isi_komentar'];
-            //     $dataKomen[''] = $dataPostKomentar['isi_komentar'];
+    private function pencarianBeritaKategori($kategori, $pencarian) {
 
-            // }
+        // $kategori = $this->model("Kategori_model")->getCategoryByName($kategori);
+        
+        $data['berita']['search'] = $this->model("Berita_model")->getSearchBeritaKategori($kategori['nama_kategori'], $pencarian);
+        $data['berita']['beritaPopuler'] = $this->model("Berita_model")->getBeritaByCategory($kategori['id_kategori'], 6);
+        $data['berita']['side'] = $this->model("Berita_model")->getBeritaByCategory($kategori['id_kategori'], 4);
+        $data['kategori'] = strtolower($kategori['nama_kategori']);
+        $this->view('templates/header', $data);
+        $this->view('components/header', $data);
+        $this->view('berita-kategori/index2', $data);
+        $this->view('templates/footer');
+    }
 
-            if($dataPostKomentar['balas-id-komentar']!=""){
-                if(isset($_SESSION['user'])){
-                    $dataKomen['id_pengguna'] = $_SESSION['user']['id'];
-                    
-                    
-                }else{
-                    $dataKomen['id_pengguna'] = null;
-                }
-                $dataKomen['id_komentar'] = $dataPostKomentar['balas-id-komentar'];
-                $dataKomen['isi_komentar'] = $dataPostKomentar['isi_komentar'];
-                // $dataKomen['id_berita'] = $dataPostKomentar['id_berita'];
-                $this->model("Komentar_reply_model")->addReplyKomentar($dataKomen);
+    public function kirimKomentar() {
+        
+        if(!isset($_POST['submit-komentar'])){
+            header("Location:".BASEURL);
+            exit;
+        }
+        if($_POST['balas-id-komentar']!=""){
+            if(isset($_SESSION['user'])){
+                $dataKomen['id_pengguna'] = $_SESSION['user']['id'];
+                
                 
             }else{
-                
-                if(isset($_SESSION['user'])){
-                    $dataKomen['id_pengguna'] = $_SESSION['user']['id'];
-                    
-                    
-                }else{
-                    $dataKomen['id_pengguna'] = null;
-                }
-                // $dataKomen['id_komentar'] = $dataPostKomentar['balas-id-komentar'];
-                $dataKomen['isi_komentar'] = $dataPostKomentar['isi_komentar'];
-                $dataKomen['id_berita'] = $dataPostKomentar['id-berita'];
-                $this->model("Komentar_model")->addKomentar($dataKomen);
-                
+                $dataKomen['id_pengguna'] = null;
             }
-            //cek reply komen atau tidak
+            $dataKomen['id_komentar'] = $_POST['balas-id-komentar'];
+            $dataKomen['isi_komentar'] = $_POST['isi_komentar'];
+            // $dataKomen['id_berita'] = $dataPostKomentar['id_berita'];
+            $this->model("Komentar_reply_model")->addReplyKomentar($dataKomen);
+            
+        }else{
+            
+            if(isset($_SESSION['user'])){
+                $dataKomen['id_pengguna'] = $_SESSION['user']['id'];
+                
+                
+            }else{
+                $dataKomen['id_pengguna'] = null;
+            }
+            // $dataKomen['id_komentar'] = $dataPostKomentar['balas-id-komentar'];
+            $dataKomen['isi_komentar'] = $_POST['isi_komentar'];
+            $dataKomen['id_berita'] = $_POST['id-berita'];
+            $this->model("Komentar_model")->addKomentar($dataKomen);
             
         }
+
+        $berita = $this->model("Berita_model")->getBeritaById($_POST['id-berita']);
+        $judul = str_replace(" ", "-", $berita["judul_berita"]) . "-" . $_POST['id-berita']; 
+        $kategori = $this->model("Kategori_model")->getCategoryName($berita['id_kategori']);
+        header("Location:".BASEURL."/$kategori/$judul");
+        exit;
+    }
+
+    private function renderBerita($judul, $kategori ,$dataPostKomentar=null){
+        // $data['berita']['search'] = $this->model("Berita_model")->getSearchBeritaKategori($kategori['nama_kategori'], $pencarian);
+        $data['berita']['beritaPopuler'] = $this->model("Berita_model")->getBeritaByCategory($kategori['id_kategori'], 6);
+        $data['berita']['side'] = $this->model("Berita_model")->getBeritaByCategory($kategori['id_kategori'], 4);
+        $data['kategori'] = strtolower($kategori['nama_kategori']);
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
+        // if($dataPostKomentar!=null){
+        //     // if(isset($_SESSION['user'])){
+        //     //     $dataKomen['id_pengguna'] = $_SESSION['user']['id'];
+        //     //     $dataKomen['isi_komentar'] = $dataPostKomentar['isi_komentar'];
+        //     //     $dataKomen[''] = $dataPostKomentar['isi_komentar'];
+
+        //     // }
+
+        //     if($dataPostKomentar['balas-id-komentar']!=""){
+        //         if(isset($_SESSION['user'])){
+        //             $dataKomen['id_pengguna'] = $_SESSION['user']['id'];
+                    
+                    
+        //         }else{
+        //             $dataKomen['id_pengguna'] = null;
+        //         }
+        //         $dataKomen['id_komentar'] = $dataPostKomentar['balas-id-komentar'];
+        //         $dataKomen['isi_komentar'] = $dataPostKomentar['isi_komentar'];
+        //         // $dataKomen['id_berita'] = $dataPostKomentar['id_berita'];
+        //         $this->model("Komentar_reply_model")->addReplyKomentar($dataKomen);
+                
+        //     }else{
+                
+        //         if(isset($_SESSION['user'])){
+        //             $dataKomen['id_pengguna'] = $_SESSION['user']['id'];
+                    
+                    
+        //         }else{
+        //             $dataKomen['id_pengguna'] = null;
+        //         }
+        //         // $dataKomen['id_komentar'] = $dataPostKomentar['balas-id-komentar'];
+        //         $dataKomen['isi_komentar'] = $dataPostKomentar['isi_komentar'];
+        //         $dataKomen['id_berita'] = $dataPostKomentar['id-berita'];
+        //         $this->model("Komentar_model")->addKomentar($dataKomen);
+                
+        //     }
+        //     //cek reply komen atau tidak
+        //     $_POST = array();
+        // }
         $data['render'] = $judul;
+        $data['kategori'] = strtolower($kategori['nama_kategori']);
         $id_berita = explode("-", $judul);
         $id_berita = (int)end($id_berita);
         $data['id_berita'] = $id_berita;
         $data['judul'] = 'Politik Berita';
         // var_dump($id_berita);
-        $data['berita'] = $this->model('Berita_model')->getBeritaByCategory(1);
+        $data['author'] = $this->model("Berita_model")->getDetailBerita($id_berita)['nama_pengguna'];
+        
+        // $data['berita'] = $this->model('Berita_model')->getBeritaByCategory($kategori['id_kategori'], 6);
         $data['komentar'] = $this->model('Komentar_model')->getKomentar($id_berita);
         $this->view('templates/header', $data);
         $this->view('components/header', $data);
         //$this->view('components/header', $data);
-        $this->view("politik/index2", $data);
+        $this->view("berita-kategori/index2", $data);
         $this->view('templates/footer');
+
     }
+
+    
 
     public function komentar() {
         

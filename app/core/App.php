@@ -21,23 +21,30 @@ class App {
         $this->controller = new $this->controller;
 
         //method
-        var_dump($control == 'Home');
-        if($control == 'Home'){
-            var_dump("apakah");
-            if(isset($url[0])){
-                if(method_exists($this->controller, $url[0])){
-                
-                    $this->method = $url[0];
-                    unset($url[0]);
-                }
-            }
-        }else{
-            if(isset($url[1])){
-                if(method_exists($this->controller, $url[1])){
-                    
-                    $this->method = $url[1];
-                    unset($url[1]);
-                }
+        // var_dump($control == 'Home');
+        // if($control == 'Home'){
+        //     var_dump("apakah");
+        //     if(isset($url[0])){
+        //         if(method_exists($this->controller, $url[0])){
+
+        //             $this->method = $url[0];
+        //             unset($url[0]);
+        //         }
+        //     }
+        // }else{
+        //     if(isset($url[1])){
+        //         if(method_exists($this->controller, $url[1])){
+
+        //             $this->method = $url[1];
+        //             unset($url[1]);
+        //         }
+        //     }
+        // }
+        if (isset($url[1])) {
+            if (method_exists($this->controller, $url[1])) {
+
+                $this->method = $url[1];
+                unset($url[1]);
             }
         }
         

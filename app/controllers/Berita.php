@@ -128,7 +128,7 @@ class Berita extends Controller
                 $newName .= ".";
                 $ekstensi = explode(".", $file_value["name"]);
                 $ekstensi = strtolower(end($ekstensi));
-                $newName .= $ekstensi;
+                $newName .= ".".$ekstensi;
 
 
                 move_uploaded_file($file_value["tmp_name"], __DIR__ . "/../../public/assets/$keyKategori/" . $newName);
@@ -206,13 +206,13 @@ class Berita extends Controller
         $keyKategori = strtolower($this->model('Kategori_model')->getCategoryName($newsData["kategori_berita"]));
 
         $newsJudul = "$judul-$uniqId";
-        $tumbnail = $keyKategori . "Tumbnail.png";
+        $tumbnail = $keyKategori . "Tumbnail.jpg";
 
         if (!empty($files['tumbnail']['name'])) {
             $tumbnail = $newsJudul;
             $ekstensi = explode(".", $files['tumbnail']["name"]);
             $ekstensi = strtolower(end($ekstensi));
-            $tumbnail .= $ekstensi;
+            $tumbnail .= ".".$ekstensi;
             move_uploaded_file($files['tumbnail']["tmp_name"], __DIR__ . "/../../public/assets/$keyKategori/" . $tumbnail);
         }
         unset($files['tumbnail']);
@@ -221,20 +221,44 @@ class Berita extends Controller
         $dataBerita["nama_tumbnail"] = $tumbnail;
         $dataBerita["kategori_berita"] = $newsData["kategori_berita"];
 
+        if ($this->model("Berita_model")->createBerita($user_id, $dataBerita) < 0) {
+            return false;
+        }
+
         // $this->model("Berita_model")->createBerita($user_id, $dataBerita);
 
         if (!file_exists(__DIR__ . "/../views/$keyKategori")) {
-            mkdir(__DIR__ . "/../views/$keyKategori", 0777, true);
+            mkdir(__DIR__ . "/../views/berita-kategori/$keyKategori", 0777, true);
             mkdir(__DIR__ . "/../../public/assets/$keyKategori", 0777, true);
         }
-        $fileOpen = fopen(__DIR__ . "/../views/$keyKategori/$newsJudul.php", "w");
-        $txt = "<img src=\"" . BASEURL . "/assets/$keyKategori/$tumbnail\" class=\"w-full cover\"/>\n";
+        $fileOpen = fopen(__DIR__ . "/../views/berita-kategori/$keyKategori/$newsJudul.php", "w");
+
+        $txt = "<h1 class=\"text-2xl text-center\">{$newsData['judul_berita']}</h1>\n";
         fwrite($fileOpen, $txt);
 
-        $txt = "<h1 class=\"text-2xl\">{$newsData['judul_berita']}</h1>\n";
+        $detailBerita = $this->model("Berita_model")->getDetailBerita($uniqId);
+        $txt = "<p class=\"text-sm text-center\">{$detailBerita['tanggal_terbit']}, Penulis : {$detailBerita['nama_pengguna']}</p>\n";
         fwrite($fileOpen, $txt);
-        $txt = "<h2 class=\"text-lg\">{$newsData['lokasi_berita']}, {$newsData["sumber_berita"]}</h2>\n";
+
+        if($newsData["sumber_berita"]==""){
+            $newsData["sumber_berita"]="Berita Kami";
+        }
+        $txt = "<p class=\"text-sm text-center\">{$newsData['lokasi_berita']}, {$newsData["sumber_berita"]}</p>\n";
         fwrite($fileOpen, $txt);
+
+        $txt = "<img src=\"" . BASEURL . "/assets/$keyKategori/$tumbnail\" class=\"w-full object-contain h-80\"/>\n";
+        fwrite($fileOpen, $txt);
+
+        // $txt = "<h1 class=\"text-2xl\">{$newsData['judul_berita']}</h1>\n";
+        // fwrite($fileOpen, $txt);
+
+        // $detailBerita = $this->model("Berita_model")->getDetailBerita($uniqId);
+        // $txt = "<p class=\"text-sm text-center\">{$detailBerita['tanggal_terbit']}, Penulis : {$detailBerita['nama_pengguna']}</p>\n";
+        // fwrite($fileOpen, $txt);
+
+
+        // $txt = "<p class=\"text-lg\">{$newsData['lokasi_berita']}, {$newsData["sumber_berita"]}</p>\n";
+        // fwrite($fileOpen, $txt);
 
         unset($newsData["judul_berita"]);
         unset($newsData["kategori_berita"]);
@@ -264,7 +288,7 @@ class Berita extends Controller
 
                         move_uploaded_file($file_value["tmp_name"], __DIR__ . "/../../public/assets/$keyKategori/" . $newName);
 
-                        $txt = "<img src=\"" . BASEURL . "/assets/$keyKategori/$newName\" />\n";
+                        $txt = "<img src=\"" . BASEURL . "/assets/$keyKategori/$newName\" class=\"w-full object-contain h-80\"/>\n";
                         fwrite($fileOpen, $txt);
                         unset($files[$file]);
                     } else {
@@ -305,7 +329,7 @@ class Berita extends Controller
 
 
                 move_uploaded_file($file_value["tmp_name"], __DIR__ . "/../../public/assets/$keyKategori/" . $newName);
-                $txt = "<img src=\"" . BASEURL . "/assets/$keyKategori/$newName\" />";
+                $txt = "<img src=\"" . BASEURL . "/assets/$keyKategori/$newName\" class=\"w-full object-contain h-80\" />\n";
                 fwrite($fileOpen, $txt);
                 unset($files[$file]);
             }
@@ -314,16 +338,14 @@ class Berita extends Controller
         // var_dump($files);
         // die;
         fclose($fileOpen);
-        if ($this->model("Berita_model")->createBerita($user_id, $dataBerita) > 0) {
-            return "$keyKategori/$newsJudul";
-        }
-        return false;
+        
+        return "$keyKategori/$newsJudul";
     }
 
-    public function print($judulBerita){
+    public function print($kategori, $judulBerita){
         // var_dump($judulBerita);
         $this->view('templates/header');
-        $this->view("politik/$judulBerita");
+        $this->view("berita-kategori/$kategori/$judulBerita");
         $this->view('templates/footer');
         echo "<script>window.print()</script>";
     }

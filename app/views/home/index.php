@@ -2,46 +2,40 @@
     <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
         <!-- Item 1 -->
-        <?php foreach ($data['berita'] as $berita) : ?>
-
+        <?php foreach ($data['berita']['carousel'] as $berita) : ?>
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
                 <div class="absolute bottom-6 left-12 p-3 text-white z-10">
+                    <h2 class="text-lg"><?= $berita['judul_berita'] ?></h2>
                     <div class=" flex flex-col md:flex-row md:items-center">
 
                         <a href="#"><?= $berita['nama_kategori'] ?></a>
+
                         <p class="before:content-[''] before:bg-white before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6"><?= $berita['tanggal_terbit'] ?></p>
 
                     </div>
-                    <?php $berita['judul_berita'] = str_replace(" ", "-", $berita['judul_berita'])?>
-                    <a href="<?= BASEURL . "/" . strtolower($berita['nama_kategori']) . "/" . $berita['judul_berita'] . "-" . $berita['id_berita'] ?>/">
-                        <h2 class="text-lg"><?= $berita['judul_berita'] ?></h2>
-                    </a>
-                </div>
-                <a href="<?= BASEURL . "/" . strtolower($berita['nama_kategori']) . "/" . $berita['judul_berita'] . "-" . $berita['id_berita'] ?>/">
-                    <img src="<?= BASEURL ?>/assets/<?= $berita['nama_kategori'] ?>/<?= $berita['nama_tumbnail'] ?>" class="brightness-50 absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
-                </a>
-            </div>
 
+                    <!-- <h2 class="text-lg"><?= $berita['judul_berita'] ?></h2> -->
+                </div>
+                <img src="<?= BASEURL ?>/assets/<?= $berita['nama_kategori'] ?>/<?= $berita['nama_tumbnail'] ?>" class="brightness-50 absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            </div>
         <?php endforeach; ?>
 
     </div>
     <!-- Slider indicators -->
     <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <?php $index = 1 ?>
+        <?php $index = 0 ?>
         <?php $aria = true ?>
-        <?php foreach ($data['berita'] as $berita) : ?>
-
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="<?= $aria ?>" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-
+        <?php foreach ($data['berita']['carousel'] as $berita) : ?>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="<?= $aria ?>" aria-label="Slide <?= $index ?>" data-carousel-slide-to="<?= $index ?>"></button>
             <!-- <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
             <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
             <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
             <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button> -->
             <?php $index++ ?>
             <?php $aria = false ?>
-
         <?php endforeach; ?>
     </div>
+
     <!-- Slider controls -->
     <button type="button" class="absolute top-0 start-0 bottom-0 z-20 flex items-center justify-center  px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30  group-hover:bg-white/50  group-focus:ring-4 group-focus:ring-white  group-focus:outline-none">
@@ -70,149 +64,59 @@
         <h2 class="text-4xl font-serif  px-9"><span class="relative before:content-[''] before:bg-black before:absolute before:w-96 before:h-1 before:my-auto before:top-0 before:bottom-0 before:left-full px-6 after:content-[''] after:bg-black after:absolute after:w-96 after:h-1 after:my-auto after:top-0 after:bottom-0 after:right-full">Berita Populer</span></h2>
     </section>
 
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow  ">
-        <a href="" class="flex justify-center">
-            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
-        </a>
-        <div class="p-5">
-            <div class="flex flex-col md:flex-row md:items-center">
-
-                <a href="#" class="text-red-500">Kategori</a>
-                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-            </div>
-
-            <a href="">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5>
+    <?php foreach ($data['berita']['beritaPopuler'] as $berita) : ?>
+        <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow  ">
+            <a href="<?= BASEURL . "/" . strtolower($berita['nama_kategori']) . "/" ?><?= str_replace(" ", "-", $berita['judul_berita']) . "-" . $berita['id_berita'] ?>" class="flex justify-center">
+                <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/<?= strtolower($berita['nama_kategori']) ?>/<?= $berita['nama_tumbnail'] ?>" alt="" />
             </a>
-        </div>
-    </div>
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow  ">
-        <a href="" class="flex justify-center">
-            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
-        </a>
-        <div class="p-5">
-            <div class="flex flex-col md:flex-row md:items-center">
+            <div class="p-5">
+                <div class="flex flex-col md:flex-row md:items-center">
 
-                <a href="#" class="text-red-500">Kategori</a>
-                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
+                    <a href="<?= BASEURL ?>/<?= strtolower($berita['nama_kategori']) ?>" class="text-red-500"><?= $berita['nama_kategori'] ?></a>
+                    <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6"><?= $berita['tanggal_terbit'] ?></p>
 
+                </div>
+
+                <a href="<?= BASEURL . "/" . strtolower($berita['nama_kategori']) . "/" ?><?= str_replace(" ", "-", $berita['judul_berita']) . "-" . $berita['id_berita'] ?>">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 "><?= $berita['judul_berita'] ?></h5>
+                </a>
             </div>
-
-            <a href="">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5>
-            </a>
         </div>
-    </div>
-    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow  ">
-        <a href="" class="flex justify-center">
-            <img class="p-3 rounded-t-lg w-36" src="<?= BASEURL ?>/assets/politik/car.png" alt="" />
-        </a>
-        <div class="p-5">
-            <div class="flex flex-col md:flex-row md:items-center">
-
-                <a href="#" class="text-red-500">Kategori</a>
-                <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-            </div>
-
-            <a href="">
-                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5>
-            </a>
-        </div>
-    </div>
+    <?php endforeach; ?>
+    
 </div>
 
 
 <!-- Berita  -->
 
-<div class="max-w-6xl p-5 flex justify-between m-auto items-start ">
+<div class="max-w-6xl p-5 flex justify-between m-auto items-start">
 
-    <div class="content p-2 flex flex-col flex-auto md:flex-none min-w-fit">
+    <div class="content p-2 flex flex-col flex-grow">
+
         <section class=" flex justify-center overflow-hidden">
             <h2 class="text-4xl font-serif  px-9"><span class="relative before:content-[''] before:bg-black before:absolute before:w-96 before:h-1 before:my-auto before:top-0 before:bottom-0 before:left-full px-6 after:content-[''] after:bg-black after:absolute after:w-96 after:h-1 after:my-auto after:top-0 after:bottom-0 after:right-full">Berita Lain</span></h2>
         </section>
+
+
         <div class="pt-3 grid grid-flow-row gap-3">
-            <article class="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100   ">
-                <img class="object-cover w-20 rounded-lg h-auto m-3" src="<?= BASEURL ?>/assets/politik/car.png" alt="">
-                <!-- <h5 class="mb-2 text-base font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5> -->
-                <div class="flex flex-col justify-between p-4 leading-normal">
+            <?php foreach ($data['berita']['lain'] as $berita) : ?>
+                <article class="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100   ">
+                    <img class="object-cover w-20 rounded-lg h-auto m-3" src="<?= BASEURL ?>/assets/politik/<?= $berita['nama_tumbnail'] ?>" alt="">
+                    <!-- <h5 class="mb-2 text-base font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5> -->
+                    <div class="flex flex-col justify-between p-4 leading-normal">
 
-                    <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 ">Kecelakaan Laka Lantas Jalan Baru</h5>
-                    <div class="flex flex-col md:flex-row md:items-center ">
+                        <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 "><?= $berita['judul_berita'] ?></h5>
+                        <div class="flex flex-col md:flex-row md:items-center ">
 
-                        <a href="#" class="text-red-500">Kategori</a>
-                        <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
+                            <a href="#" class="text-red-500"><?= $berita['nama_kategori'] ?></a>
+                            <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6"><?= $berita['tanggal_terbit'] ?></p>
 
+                        </div>
                     </div>
-                </div>
 
 
-            </article>
-            <article class="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100   ">
-                <img class="object-cover w-20 rounded-lg h-auto m-3" src="<?= BASEURL ?>/assets/politik/car.png" alt="">
-                <!-- <h5 class="mb-2 text-base font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5> -->
-                <div class="flex flex-col justify-between p-4 leading-normal">
-
-                    <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 ">Kecelakaan Laka Lantas Jalan Baru</h5>
-                    <div class="flex flex-col md:flex-row md:items-center ">
-
-                        <a href="#" class="text-red-500">Kategori</a>
-                        <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-                    </div>
-                </div>
-
-
-            </article>
-            <article class="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100   ">
-                <img class="object-cover w-20 rounded-lg h-auto m-3" src="<?= BASEURL ?>/assets/politik/car.png" alt="">
-                <!-- <h5 class="mb-2 text-base font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5> -->
-                <div class="flex flex-col justify-between p-4 leading-normal">
-
-                    <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 ">Kecelakaan Laka Lantas Jalan Baru ehfbjwebfjwefwefjewfj</h5>
-                    <div class="flex flex-col md:flex-row md:items-center ">
-
-                        <a href="#" class="text-red-500">Kategori</a>
-                        <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-                    </div>
-                </div>
-
-
-            </article>
-            <article class="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100   ">
-                <img class="object-cover w-20 rounded-lg h-auto m-3" src="<?= BASEURL ?>/assets/politik/car.png" alt="">
-                <!-- <h5 class="mb-2 text-base font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5> -->
-                <div class="flex flex-col justify-between p-4 leading-normal">
-
-                    <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 ">Kecelakaan Laka Lantas Jalan Baru</h5>
-                    <div class="flex flex-col md:flex-row md:items-center ">
-
-                        <a href="#" class="text-red-500">Kategori</a>
-                        <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-                    </div>
-                </div>
-
-
-            </article>
-            <article class="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100   ">
-                <img class="object-cover w-20 rounded-lg h-auto m-3" src="<?= BASEURL ?>/assets/politik/car.png" alt="">
-                <!-- <h5 class="mb-2 text-base font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5> -->
-                <div class="flex flex-col justify-between p-4 leading-normal">
-
-                    <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 ">Kecelakaan Laka Lantas Jalan Baru</h5>
-                    <div class="flex flex-col md:flex-row md:items-center ">
-
-                        <a href="#" class="text-red-500">Kategori</a>
-                        <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6">3 Mar 2023, 21.30</p>
-
-                    </div>
-                </div>
-
-
-            </article>
+                </article>
+            <?php endforeach; ?>
 
         </div>
 
@@ -224,10 +128,9 @@
             <h2 class="text-2xl">Kategori lain</h2>
         </section>
         <div class="flex flex-wrap">
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2   focus:outline-none ">Politik</button>
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2   focus:outline-none ">News</button>
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2   focus:outline-none ">Budaya</button>
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2   focus:outline-none ">Budaya</button>
+            <?php foreach ($data['allKategori'] as $kategori) : ?>
+                <a href="<?= BASEURL ?>/<?= strtolower($kategori['nama_kategori']) ?>" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2   focus:outline-none "><?= $kategori['nama_kategori'] ?></a>
+            <?php endforeach; ?>
 
         </div>
 
