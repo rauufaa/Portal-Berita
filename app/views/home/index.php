@@ -2,23 +2,57 @@
     <!-- Carousel wrapper -->
     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
         <!-- Item 1 -->
-        <?php foreach ($data['berita']['carousel'] as $berita) : ?>
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <div class="absolute bottom-6 left-12 p-3 text-white z-10">
-                    <h2 class="text-lg"><?= $berita['judul_berita'] ?></h2>
-                    <div class=" flex flex-col md:flex-row md:items-center">
+        <?php if (!isset($data['berita']['search'])) : ?>
+            <?php foreach ($data['berita']['carousel'] as $berita) : ?>
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <div class="absolute bottom-6 left-12 p-3 text-white z-10">
+                        <h2 class="text-lg"><?= $berita['judul_berita'] ?></h2>
+                        <div class=" flex flex-col md:flex-row md:items-center">
 
-                        <a href="#"><?= $berita['nama_kategori'] ?></a>
+                            <a href="#"><?= $berita['nama_kategori'] ?></a>
 
-                        <p class="before:content-[''] before:bg-white before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6"><?= $berita['tanggal_terbit'] ?></p>
+                            <p class="before:content-[''] before:bg-white before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6"><?= $berita['tanggal_terbit'] ?></p>
 
+                        </div>
+
+                        <!-- <h2 class="text-lg"><?= $berita['judul_berita'] ?></h2> -->
                     </div>
-
-                    <!-- <h2 class="text-lg"><?= $berita['judul_berita'] ?></h2> -->
+                    <img src="<?= BASEURL ?>/assets/<?= $berita['nama_kategori'] ?>/<?= $berita['nama_tumbnail'] ?>" class="brightness-50 absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
-                <img src="<?= BASEURL ?>/assets/<?= $berita['nama_kategori'] ?>/<?= $berita['nama_tumbnail'] ?>" class="brightness-50 absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+            <?php endforeach; ?>
+        <?php else : ?>
+            <div class="content p-2 flex flex-col flex-grow">
+
+                <section class=" flex justify-center overflow-hidden">
+                    <h2 class="text-4xl font-serif  px-9"><span class="relative before:content-[''] before:bg-black before:absolute before:w-96 before:h-1 before:my-auto before:top-0 before:bottom-0 before:left-full px-6 after:content-[''] after:bg-black after:absolute after:w-96 after:h-1 after:my-auto after:top-0 after:bottom-0 after:right-full">Pencarian</span></h2>
+                </section>
+
+
+                <div class="pt-3 grid grid-flow-row gap-3">
+                    <?php foreach ($data['berita']['search'] as $berita) : ?>
+                        <article class="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow  hover:bg-gray-100   ">
+                            <img class="object-cover w-20 rounded-lg h-auto m-3" src="<?= BASEURL ?>/assets/politik/<?= $berita['nama_tumbnail'] ?>" alt="">
+                            <!-- <h5 class="mb-2 text-base font-bold tracking-tight text-gray-900 ">Noteworthy technology acquisitions 2021</h5> -->
+                            <div class="flex flex-col justify-between p-4 leading-normal">
+
+                                <h5 class="mb-2 text-sm font-bold tracking-tight text-gray-900 "><?= $berita['judul_berita'] ?></h5>
+                                <div class="flex flex-col md:flex-row md:items-center ">
+
+                                    <a href="#" class="text-red-500"><?= $berita['nama_kategori'] ?></a>
+                                    <p class="before:content-[''] before:bg-black before:w-1.5 before:h-1.5 before:block before:rounded-lg before:absolute before:my-auto relative before:top-0 before:bottom-0 before:-left-4 ml-6"><?= $berita['tanggal_terbit'] ?></p>
+
+                                </div>
+                            </div>
+
+
+                        </article>
+                    <?php endforeach; ?>
+                    <!--  -->
+
+                </div>
+
             </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
 
     </div>
     <!-- Slider indicators -->
@@ -83,7 +117,7 @@
             </div>
         </div>
     <?php endforeach; ?>
-    
+
 </div>
 
 

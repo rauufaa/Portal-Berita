@@ -4,7 +4,7 @@ class Berita extends Controller
 {
     public function index()
     {
-        
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
         $data['judul'] = 'Berita';
         $data['berita'] = $this->model('Berita_model')->getBerita();
         $this->view('templates/header', $data);
@@ -14,6 +14,7 @@ class Berita extends Controller
 
     public function detail()
     {
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
         $data['judul'] = 'Home';
         $data['berita'] = $this->model('Berita_model')->getBeritaById();
         $this->view('templates/header', $data);
@@ -23,7 +24,7 @@ class Berita extends Controller
 
     public function tambah()
     {
-        
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
         $dataHeader['judul'] = 'tambah';
         $data['kategori'] = $this->model('Kategori_model')->getAllKategori();
         $this->view('templates/header', $dataHeader);
@@ -181,6 +182,7 @@ class Berita extends Controller
 
     public function updateBerita($news)
     {
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
         $data['judul'] = 'Home';
         $data['berita'] = $this->model('Berita_model')->getBeritaById();
         $data['news'] = $news;

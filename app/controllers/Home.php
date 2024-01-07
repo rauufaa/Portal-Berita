@@ -25,7 +25,7 @@ class Home extends Controller{
             exit;
         }
 
-        if(!empty($kategori)){
+        if(!empty($kategori) && $kategori != "cari"){
             $kategori = $this->model("Kategori_model")->getCategoryByName($kategori);
             $this->kategoriBerita($kategori, $judul);
             exit;
@@ -34,6 +34,11 @@ class Home extends Controller{
         switch($kategori){
             case "politik":
 
+        }
+
+        
+        if(isset($_GET['pencarian_berita'])){
+            $data['berita']['search'] = $this->model('Berita_model')->getSearchBeritaKategoriAll($_GET['pencarian_berita']);
         }
         // $data['judul'] = $kategori["nama_kategori"];
         // $data['render'] = $judul;

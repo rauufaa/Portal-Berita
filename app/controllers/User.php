@@ -12,10 +12,11 @@ class User extends Controller{
         $data['tab'] = $tab;
         $data['berita'] = $this->model('Berita_model')->getBeritaUser($_SESSION['user']['id']);
         if($data['tab']=="")$data['tab']="profile";
-        var_dump($data['tab']);
+        // var_dump($data['tab']);
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
         //die;
         $this->view('templates/header', $data);
-        $this->view('components/header');
+        $this->view('components/header', $data);
         $this->view('user/index', $data);
         $this->view('templates/footer');
     }
@@ -34,7 +35,7 @@ class User extends Controller{
             header("Location:".BASEURL);
         }
         if ($this->model('Berita_model')->deleteBerita($id_berita) > 0) {
-            header('Location: ' . BASEURL . '/user');
+            header('Location: ' . BASEURL . '/user/dashboard');
             exit;
         }
     }
