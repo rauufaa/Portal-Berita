@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 04, 2024 at 07:01 AM
+-- Generation Time: Jan 07, 2024 at 04:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,8 +42,21 @@ CREATE TABLE `berita` (
 --
 
 INSERT INTO `berita` (`id_berita`, `judul_berita`, `nama_tumbnail`, `tanggal_terbit`, `edit`, `id_kategori`, `id_pengguna`) VALUES
-(24, 'GHKSHFGS', 'politikTumbnail.png', '2023-11-29 17:45:41', 5, 1, 23000000),
-(25, 'Indonesia Merdeka', 'politikTumbnail.png', '2023-11-29 21:20:18', 2, 1, 23000000);
+(27, 'Macan Lepas', 'olahragaTumbnail.png', '2024-01-05 10:02:52', 0, 2, 23000000),
+(28, 'honto', 'politikTumbnail.png', '2024-01-05 22:29:36', 0, 1, 23000000),
+(29, 'Asu', 'Asu-29jpg', '2024-01-06 14:05:10', 0, 1, 23000000),
+(30, 'Asu', 'Asu-30jpg', '2024-01-06 14:06:17', 0, 2, 23000000),
+(31, 'Exovalen', 'politikTumbnail.png', '2024-01-06 14:19:56', 0, 1, 23000000),
+(32, 'wfwefwefwef', 'politikTumbnail.png', '2024-01-06 14:21:27', 0, 1, 23000000),
+(33, 'wfwefwefwef', 'olahragaTumbnail.png', '2024-01-06 14:24:40', 0, 2, 23000000),
+(34, 'Henota', 'Henota-34jpg', '2024-01-06 15:54:56', 0, 1, 23000000),
+(35, 'Harara', 'Harara-35jpg', '2024-01-06 15:57:58', 0, 1, 23000000),
+(36, 'halu', 'halu-36jpg', '2024-01-06 16:08:22', 0, 2, 23000000),
+(37, 'dfsdfsdf', 'dfsdfsdf-37.jpg', '2024-01-06 16:13:54', 0, 1, 23000000),
+(38, 'Assu', 'Assu-38.jpg', '2024-01-06 16:46:40', 0, 1, 23000000),
+(39, 'Assu', 'Assu-39.jpg', '2024-01-06 16:47:39', 0, 1, 23000000),
+(40, 'Jadwal Rangkaian Pernikahan Pangeran Abdul Mateen-Anisha Rosnah Selama 10 Hari', 'politikTumbnail.jpg', '2024-01-06 18:59:08', 0, 1, 23000000),
+(41, 'Pedri Sindir Orang-orang yang Cibir Cristiano Ronaldo', 'politikTumbnail.jpg', '2024-01-06 19:18:06', 0, 1, 23000000);
 
 -- --------------------------------------------------------
 
@@ -74,7 +87,7 @@ CREATE TABLE `komentar` (
   `id_komentar` int(50) NOT NULL,
   `isi_komentar` text NOT NULL,
   `tanggal_komentar` datetime NOT NULL,
-  `id_pengguna` int(50) NOT NULL,
+  `id_pengguna` int(50) DEFAULT NULL,
   `id_berita` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -83,9 +96,11 @@ CREATE TABLE `komentar` (
 --
 
 INSERT INTO `komentar` (`id_komentar`, `isi_komentar`, `tanggal_komentar`, `id_pengguna`, `id_berita`) VALUES
-(3, 'halo halo', '2023-11-29 12:23:42', 23000000, 24),
-(4, 'Halooooooo', '2023-11-29 13:31:12', 23000000, 24),
-(5, 'shdfhkdsjhfk', '2023-11-29 13:50:43', 23000000, 24);
+(29, 'Yakin lu dek', '2024-01-06 14:12:17', NULL, 30),
+(30, 'Norak Lo semua', '2024-01-06 14:34:29', NULL, 33),
+(31, 'Lu ISapap', '2024-01-06 15:15:54', NULL, 33),
+(32, 'Asu kau boy\r\n', '2024-01-06 18:52:36', 23000000, 39),
+(33, 'Kontol\r\n', '2024-01-06 19:22:47', 23000000, 41);
 
 -- --------------------------------------------------------
 
@@ -97,7 +112,7 @@ CREATE TABLE `komentar_reply` (
   `id_komentar` int(50) NOT NULL,
   `isi_komentar` text NOT NULL,
   `tanggal_komentar` datetime NOT NULL,
-  `id_pengguna` int(50) NOT NULL
+  `id_pengguna` int(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -105,9 +120,8 @@ CREATE TABLE `komentar_reply` (
 --
 
 INSERT INTO `komentar_reply` (`id_komentar`, `isi_komentar`, `tanggal_komentar`, `id_pengguna`) VALUES
-(3, 'Yayayaya', '2023-11-29 12:45:07', 23000000),
-(3, 'hgjgsdajgf', '2023-11-29 13:31:44', 23000000),
-(4, 'sddsdsds', '2023-11-29 13:32:01', 23000000);
+(29, 'Kontol sok asik', '2024-01-06 14:12:39', NULL),
+(30, 'Hontol', '2024-01-06 14:44:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -128,7 +142,7 @@ CREATE TABLE `pengguna` (
 --
 
 INSERT INTO `pengguna` (`id_pengguna`, `nama_pengguna`, `email`, `password`, `role`) VALUES
-(23000000, 'Icun Gunawan', 'icungunawan@gmail.com', 'kudalumping', 'ADMIN');
+(23000000, 'Icun Gunawan', 'icungunawan@gmail.com', '330b8d964c0b81954959fae0e1b31b56', 'ADMIN');
 
 --
 -- Indexes for dumped tables
@@ -177,7 +191,7 @@ ALTER TABLE `pengguna`
 -- AUTO_INCREMENT for table `berita`
 --
 ALTER TABLE `berita`
-  MODIFY `id_berita` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id_berita` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `kategori`
@@ -189,7 +203,7 @@ ALTER TABLE `kategori`
 -- AUTO_INCREMENT for table `komentar`
 --
 ALTER TABLE `komentar`
-  MODIFY `id_komentar` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_komentar` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
