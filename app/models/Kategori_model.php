@@ -8,6 +8,20 @@ class Kategori_model{
         $this->db = new Database;
     }
 
+    public function addKategori($nama_kategori) {
+        $this->db->query("INSERT INTO $this->table VALUES ('',:nama_kategori)");
+        $this->db->bind("nama_kategori", $nama_kategori);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
+    public function deleteKategori($id) {
+        $this->db->query("DELETE FROM $this->table WHERE id_kategori=:id_kategori");
+        $this->db->bind("id_kategori", $id);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
     public function getAllKategori(){
         $this->db->query('SELECT * FROM ' . $this->table);
         return $this->db->resultSet();

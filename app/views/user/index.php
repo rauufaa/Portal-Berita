@@ -1,8 +1,4 @@
 <div class=" max-w-6xl m-auto">
-
-
-
-
     <div class="border-b border-gray-200 " id="tab-content">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 ">
             <li class="me-2">
@@ -20,7 +16,7 @@
                 </a>
             </li>
             <li class="me-2">
-                <a href="#" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300  group">
+                <a href="<?= BASEURL ?>/user/settings" id="settings" class="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300  group">
                     <svg class="w-4 h-4 me-2 text-gray-400 group-hover:text-gray-500  " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M5 11.424V1a1 1 0 1 0-2 0v10.424a3.228 3.228 0 0 0 0 6.152V19a1 1 0 1 0 2 0v-1.424a3.228 3.228 0 0 0 0-6.152ZM19.25 14.5A3.243 3.243 0 0 0 17 11.424V1a1 1 0 0 0-2 0v10.424a3.227 3.227 0 0 0 0 6.152V19a1 1 0 1 0 2 0v-1.424a3.243 3.243 0 0 0 2.25-3.076Zm-6-9A3.243 3.243 0 0 0 11 2.424V1a1 1 0 0 0-2 0v1.424a3.228 3.228 0 0 0 0 6.152V19a1 1 0 1 0 2 0V8.576A3.243 3.243 0 0 0 13.25 5.5Z" />
                     </svg>Settings
@@ -41,10 +37,13 @@
 
     <div id="default-tab-content">
         <div class="p-4 rounded-lg bg-gray-50 " id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            
+
             <?php switch ($data['tab']) {
                 case "dashboard":
                     require_once("dashboard.php");
+                    break;
+                case "settings":
+                    require_once("settings.php");
                     break;
                 default:
                     require_once("profile.php");
@@ -67,6 +66,9 @@
     switch (tab) {
         case "dashboard":
             changeTab("dashboard");
+            break;
+        case "settings":
+            changeTab("settings");
             break;
 
         default:

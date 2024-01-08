@@ -37,6 +37,7 @@ class Berita extends Controller
     public function edit($judul_berita)
     {
         
+        
         if (!$_SESSION) {
             header("Location:" . BASEURL);
             exit;
@@ -45,12 +46,13 @@ class Berita extends Controller
         $idBerita = (int)end($idBerita);
 
         $kategori = strtolower($this->model("Berita_model")->getCategoryName($idBerita));
+        $data['allKategori'] = $this->model("Kategori_model")->getAllKategori();
         $data['judul_berita'] = $judul_berita;
         $data['kategori'] = $kategori;
 
 
         $this->view('templates/header');
-        $this->view('components/header');
+        $this->view('components/header', $data);
 
         $this->view('berita/edit', $data);
         $this->view('templates/footer');
@@ -66,8 +68,8 @@ class Berita extends Controller
 
 
         $keyKategori = strtolower($this->model("Berita_model")->getCategoryName($idBerita));
-        $fileOpen = fopen(__DIR__ . "/../views/$keyKategori/$judul_berita.php", "a") or die("tidak bisa buka filew");
-        $txt = "<h2>Edited :" . date("Y/m/d") . "</h2>\n";
+        $fileOpen = fopen(__DIR__ . "/../views/berita-kategori/$keyKategori/$judul_berita.php", "a") or die("tidak bisa buka filew");
+        $txt = "<br><br><h2>Edited :" . date("Y/m/d H:i") . "</h2>\n";
         fwrite($fileOpen, $txt);
 
         foreach ($newsData as $data => $value_data) {

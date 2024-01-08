@@ -66,13 +66,14 @@ class Berita_model
     }
 
     public function getBeritaUser($id) {
-        $this->db->query("SELECT * FROM $this->table WHERE id_pengguna=:id_pengguna;");
+        $this->db->query("SELECT berita.id_berita, berita.judul_berita, berita.nama_tumbnail,DATE_FORMAT(berita.tanggal_terbit, '%d-%b-%Y %H:%i') as tanggal_terbit, berita.edit, kategori.nama_kategori, berita.id_pengguna, pengguna.nama_pengguna FROM  $this->table left join kategori on $this->table.id_kategori=kategori.id_kategori left join pengguna on $this->table.id_pengguna=pengguna.id_pengguna WHERE $this->table.id_pengguna=:id_pengguna;");
         $this->db->bind("id_pengguna", $id);
         return $this->db->resultSet();
     }
 
     public function setCountEdited($id_berita) {
-        $this->db->query("UPDATE $this->table SET edit=edit+1");
+        $this->db->query("UPDATE $this->table SET edit=edit+1 WHERE id_berita=:id_berita");
+        $this->db->bind("id_berita", $id_berita);
         $this->db->execute();
         return $this->db->rowCount();
     }
