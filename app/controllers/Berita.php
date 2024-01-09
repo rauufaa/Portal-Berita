@@ -231,7 +231,7 @@ class Berita extends Controller
 
         // $this->model("Berita_model")->createBerita($user_id, $dataBerita);
 
-        if (!file_exists(__DIR__ . "/../views/$keyKategori")) {
+        if (!file_exists(__DIR__ . "/../views/berita-kategori/$keyKategori")) {
             mkdir(__DIR__ . "/../views/berita-kategori/$keyKategori", 0777, true);
             mkdir(__DIR__ . "/../../public/assets/$keyKategori", 0777, true);
         }

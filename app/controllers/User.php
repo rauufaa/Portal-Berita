@@ -63,6 +63,35 @@ class User extends Controller{
         exit;
     }
 
+    public function ubahKategori()
+    {
+        if (!isset($_SESSION['user']) || $_SESSION['user']['role'] != "ADMIN") {
+            header("Location:" . BASEURL);
+            exit;
+        }
+
+        if (!isset($_POST)) {
+            header("Location:" . BASEURL);
+            exit;
+        }
+
+        $nama_kategori = $this->model("Kategori_model")->getCategoryName($_POST['id_kategori']);
+
+        if ($this->model("Kategori_model")->updateKategori($_POST) > 0) {
+            Flasher::setFlash("Berhasil mengupdate kategori", "blue");
+            
+            if (file_exists(__DIR__ . "/../views/berita-kategori/". strtolower($nama_kategori))) {
+                rename(__DIR__ . "/../views/berita-kategori/". strtolower($nama_kategori), __DIR__ . "/../views/berita-kategori/". strtolower($_POST['nama_kategori']));
+                rename(__DIR__ . "/../../public/assets/". strtolower($nama_kategori), __DIR__ . "/../../public/assets/". strtolower($_POST['nama_kategori']));
+            }
+            header("Location:" . BASEURL . "/user/settings");
+            exit;
+        }
+        Flasher::setFlash("Gagal mengupdate kategori", "red");
+        header("Location:" . BASEURL . "/user/settings");
+        exit;
+    }
+
     public function signOut() {
         unset($_SESSION['user']);
         header("Location:" . BASEURL );

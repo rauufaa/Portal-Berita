@@ -100,9 +100,9 @@
                 </button>
             </div>
             <!-- Modal body -->
-            <form class="p-4 md:p-5">
+            <form class="p-4 md:p-5" method="post" action="<?= BASEURL."/user/ubahKategori"?>">
                 <div class="grid gap-4 mb-4 grid-cols-2">
-                    <input type="text" hidden value="ini isi">
+                    <input type="text" name="id_kategori" id="id_kategori" hidden value="ini isi">
                     <div class="col-span-2">
                         <label for="nama_kategori" class="block mb-2 text-sm font-medium text-gray-900 ">Nama Kategori</label>
                         <input type="text" name="nama_kategori" id="nama_kategori" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5      " placeholder="Nama Kategori" required="">
@@ -152,8 +152,10 @@
             
             
             $(this).on("click", function() {
-                alert($(this).attr("[data-kode-kategori]"))
+                
                 $("#link-hapus-kategori").attr("href", `<?= BASEURL . "/user/" . "hapusKategori/" ?>${$(this).attr("data-kode-kategori")}`)
+                $("#id_kategori").val($(this).attr("data-kode-kategori"))
+                
             })
         })
     })

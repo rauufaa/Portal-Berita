@@ -22,6 +22,14 @@ class Kategori_model{
         return $this->db->rowCount();
     }
 
+    public function updateKategori($data) {
+        $this->db->query("UPDATE $this->table SET nama_kategori=:nama_kategori WHERE id_kategori=:id_kategori");
+        $this->db->bind("nama_kategori", $data['nama_kategori']);
+        $this->db->bind("id_kategori", $data['id_kategori']);
+        $this->db->execute();
+        return $this->db->rowCount();
+    }
+
     public function getAllKategori(){
         $this->db->query('SELECT * FROM ' . $this->table);
         return $this->db->resultSet();
